@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Models\User;
 use App\Models\ConfigApp;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     public function login()
     {
@@ -19,6 +21,11 @@ class LoginController extends Controller
 
             return view('login', ['configData' => $configData]);
         }
+    }
+
+    public function register()
+    {
+        return view('register');
     }
 
     public function actionLogin(Request $request)
@@ -56,4 +63,20 @@ class LoginController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    public function actionregister(Request $request)
+    {
+        $user = User::create([
+            'email' => $request->email,
+            'name' => $request->fullname,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            // 'role' => $request->role,
+            'active' => 1
+        ]);
+
+        Session::flash('message', 'Register Berhasil. Akun Anda sudah Aktif silahkan Login menggunakan username dan password.');
+        return redirect('register');
+    }
+
 }

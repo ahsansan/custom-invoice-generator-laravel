@@ -21,14 +21,14 @@ class UserController extends Controller
                 'success' => true,
                 'data' => $user_lists
             ];
-            return view('user_list', ['response' => $success_role_message]);
+            return view('users.list', ['response' => $success_role_message]);
         } else {
             $failed_role_message = [
                 'success' => false,
                 'message' => 'Role anda tidak bisa mengakses halaman ini.'
             ];
             
-            return view('user_list', ['response' => $failed_role_message]);
+            return view('users.list', ['response' => $failed_role_message]);
         }
 
     }

@@ -13,7 +13,7 @@ class TransactionHelper
         $codeYearStr = substr($codeYear, -2);
         $codeCounter = str_pad($counter['counter_number'], 5, '0', STR_PAD_LEFT);
 
-        return $counter['counter_code'] . $codeYearStr . $codeMonth . $codeCounter;
+        return $counter['counter_code'] . $codeMonth . $codeYearStr . $codeCounter;
     }
 
     // Soal Per Waktuan

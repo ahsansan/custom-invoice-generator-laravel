@@ -1,11 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LoginController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,14 +19,21 @@ use App\Http\Controllers\TransactionController;
 
 // PROTECTED PAGE
 Route::get('/', [HomeController::class, 'home'])->name('home')->middleware('auth');
-Route::get('list-akun', [UserController::class, 'viewListUsers'])->name('user_list')->middleware('auth');
+Route::get('user-lists', [UserController::class, 'viewListUsers'])->name('userList')->middleware('auth');
+
+// 
 Route::get('transactions', [TransactionController::class, 'allTransaction'])->name('transactions.all')->middleware('auth');
+Route::get('transactions/add-invoice', [TransactionController::class, 'addTransaction'])->name('transactions.add')->middleware('auth');
+Route::get('invoice/{invoice_number}', [TransactionController::class, 'viewInvoice'])->name('transactions.invoice')->middleware('auth');
+Route::post('submitTransaction', [TransactionController::class, 'submitTransaction'])->name('submit.transaction')->middleware('auth');
+
+// SELAIN //
 
 // LOGIN
-Route::get('login', [LoginController::class, 'login'])->name('login');
-Route::post('actionlogin', [LoginController::class, 'actionlogin'])->name('actionlogin');
-Route::get('actionlogout', [LoginController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('actionlogin', [AuthController::class, 'actionlogin'])->name('actionlogin');
+Route::get('actionlogout', [AuthController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
 // REGISTER
-Route::get('register', [RegisterController::class, 'register'])->name('register');
-Route::post('register/action', [RegisterController::class, 'actionregister'])->name('actionregister');
+Route::get('register', [AuthController::class, 'register'])->name('register');
+Route::post('register/action', [AuthController::class, 'actionregister'])->name('actionregister');
