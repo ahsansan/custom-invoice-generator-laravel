@@ -19,7 +19,7 @@ use App\Http\Controllers\AuthController;
 
 // PROTECTED PAGE
 Route::get('/', [HomeController::class, 'home'])->name('home')->middleware('auth');
-Route::get('user-lists', [UserController::class, 'viewListUsers'])->name('userList')->middleware('auth');
+Route::get('user/lists', [UserController::class, 'viewListUsers'])->name('userList')->middleware('auth');
 
 // 
 Route::get('transactions', [TransactionController::class, 'allTransaction'])->name('transactions.all')->middleware('auth');
