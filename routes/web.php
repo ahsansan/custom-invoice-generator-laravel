@@ -18,11 +18,14 @@ use App\Http\Controllers\AuthController;
 */
 
 // PROTECTED PAGE
-Route::get('/', [HomeController::class, 'home'])->name('home')->middleware('auth');
+Route::get('/', [HomeController::class, 'homedash'])->name('homedash')->middleware('auth');
+Route::get('site-dashboard', [HomeController::class, 'home'])->name('home')->middleware('auth');
+
+// USER
 Route::get('user/lists', [UserController::class, 'viewListUsers'])->name('userList')->middleware('auth');
 
-// 
-Route::get('transactions', [TransactionController::class, 'allTransaction'])->name('transactions.all')->middleware('auth');
+// TRANSACTION
+Route::get('transactions/lists', [TransactionController::class, 'allTransaction'])->name('transactions.all')->middleware('auth');
 Route::get('transactions/add-invoice', [TransactionController::class, 'addTransaction'])->name('transactions.add')->middleware('auth');
 Route::get('invoice/{invoice_number}', [TransactionController::class, 'viewInvoice'])->name('transactions.invoice')->middleware('auth');
 Route::post('submitTransaction', [TransactionController::class, 'submitTransaction'])->name('submit.transaction')->middleware('auth');

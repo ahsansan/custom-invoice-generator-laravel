@@ -50,7 +50,7 @@ class AuthController extends Controller
             // Menyimpan role ke sesi
             Session::put('user_role', $role);
 
-            return redirect('/');
+            return redirect('/site-dashboard');
         } else {
             // Autentikasi gagal
             Session::flash('error', 'Email atau Password Salah');
@@ -71,12 +71,11 @@ class AuthController extends Controller
             'name' => $request->fullname,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            // 'role' => $request->role,
+            'role_id' => '2',
             'active' => 1
         ]);
 
         Session::flash('message', 'Register Berhasil. Akun Anda sudah Aktif silahkan Login menggunakan username dan password.');
         return redirect('register');
     }
-
 }

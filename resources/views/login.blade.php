@@ -50,6 +50,8 @@
                 <div>
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </div>
+                <hr>
+                <p class="text-center">Belum punya akun? <a href="/register">Register</a> sekarang!</p>
             </form>
         </div>
     </div>

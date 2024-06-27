@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+{{-- @dd(session('user_role')) --}}
 @section('konten')
-  <h4>Selamat Datang <b>{{Auth::user()->name}}</b>, Anda Login sebagai <b>@session('user_role'){{ session('user_role')->role_name }}@endsession</b>.</h4>
+  <h4 class="my-4 text-xl font-extrabold uppercase text-[#735FF2]">Dashboard</h4>
+  <p>Selamat Datang <b>{{Auth::user()->name}}</b>, Anda Login sebagai <b>@session('user_role'){{ session('user_role')->role_name }}@endsession</b>.</p>
 @endsection

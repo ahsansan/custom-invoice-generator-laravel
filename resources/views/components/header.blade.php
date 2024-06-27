@@ -1,14 +1,14 @@
-<nav class="w-full bg-slate-100 shadow-lg rounded-lg mb-5 py-7 px-5">
+<nav class="w-full bg-[#F2F5FE] shadow-lg rounded-lg mb-5 py-7 px-5">
     <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="flex-1 mb-2 md:flex-[87%]">
             @if($configData)
-                <a class="text-xl font-bold text-blue-500 hover:text-blue-600 hover:underline" href="{{route('home')}}">{{ $configData->website_name }}</a>
+                <a class="text-xl font-extrabold uppercase text-[#735FF2] hover:text-blue-600 hover:underline" href="{{route('home')}}">{{ $configData->website_name }}</a>
             @else
-                <a class="navbar-brand" href="{{route('home')}}">Your Website</a>
+                <a class="text-xl font-extrabold uppercase text-[#735FF2] hover:text-blue-600 hover:underline" href="{{route('home')}}">Your Website</a>
             @endif
         </div>
         <div class="flex-1 mt-2 md:flex-[13%]">
-            <button onclick="toogleProfile('menu-profile')"><i class="fa fa-user"></i> {{Auth::user()->username}} <span class="caret"></span></button>
+            <button id="menu-profile-option"><i class="fa fa-user"></i> {{Auth::user()->username}} <span class="caret"></span></button>
             <div id="menu-profile" class="z-10 hidden absolute bg-slate-100 divide-y divide-gray-100 rounded-lg shadow w-44 md:right-[2%] mt-4">
                 <div class="px-4 py-3 text-sm text-gray-900">
                 <p>{{Auth::user()->name}}</p>

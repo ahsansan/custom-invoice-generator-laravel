@@ -28,7 +28,7 @@ class UserController extends Controller
         if($role->role_code == 'SPA' or $role->role_code == 'ADM') {
 
             $query = "SELECT u.id, u.name, u.email, u.created_at, u.username, 
-                    u.active, mr.role_code, mr.role_name 
+                    u.active, mr.role_code, mr.role_name, ROW_NUMBER() OVER (ORDER BY u.id desc) AS 'index'
                     FROM users u
                     INNER JOIN mst_roles mr ON mr.id = u.role_id;";
             $user_lists = DB::select($query);
