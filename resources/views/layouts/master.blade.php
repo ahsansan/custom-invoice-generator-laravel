@@ -7,6 +7,7 @@
     <title>@yield('title', 'Custom Invoice Creator')</title>
     {{-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+    <link rel="icon" href="https://member.videolabs.id/wp-content/uploads/2023/11/LogoVideoLabsTanpaText.webp" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -27,16 +28,35 @@
     </div>    
   </div>
 </body>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{{-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> --}}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
   $('#menu-profile-option').click(function () { 
-    $('#menu-profile').toggleClass('hidden');
+    const $menuHeader = $('#menu-profile');
+    
+    if ($menuHeader.is(':hidden')) {
+      $menuHeader.hide().removeClass('hidden').slideDown(150);
+    } else {
+      $menuHeader.slideUp(150, function() {
+        $(this).addClass('hidden');
+      })
+    }
   });
 
   function toggleMenu(menuId) {
-      $('#' + menuId).toggleClass('hidden');
-      $('#' + menuId + '-dropdown').toggleClass('hidden');
+    const $menu = $('#' + menuId);
+    const $dropdown = $('#' + menuId + '-dropdown');
+    
+    if ($menu.is(':hidden')) {
+        $menu.hide().removeClass('hidden').slideDown(150);
+        $dropdown.addClass('hidden');
+      } else {
+        $menu.slideUp(150, function() {
+          $(this).addClass('hidden');
+        });
+        $dropdown.removeClass('hidden');
+    }
   }
 </script>
+@yield('scripts')
 </html>
