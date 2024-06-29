@@ -5,17 +5,56 @@ namespace App\Http\Controllers;
 use App\Helpers\TransactionHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\Counter;
 use App\Models\TrxCustomOrder;
+use App\Models\Roles;
 use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
 
-    // PAGES
-    public function allTransaction()
+    public function allTransaction(Request $request)
     {
-        return view('transactions.all');
+        $user = Auth::user();
+        $role = Roles::where('id', $user->role_id)->first();
+
+        $query = "SELECT id, invoice_number, first_name, last_name, photo, email, phone, status, price, created_by, created_at, updated_at, ROW_NUMBER() OVER (ORDER BY tco.id desc) AS 'index' FROM trx_custom_orders tco";
+        
+        $where = [];
+
+        if ($role->role_code == 'SPA') {
+            // No additional where clause
+        } else if ($role->role_code == 'ADM') {
+            $where[] = "created_by = {$user->id}";
+        } else {
+            return view('transactions.all', [
+                'response' => [
+                    'success' => false,
+                    'message' => 'Role anda tidak bisa mengakses halaman ini.'
+                ]
+            ]);
+        }
+
+        if ($request->has('search')) {
+            $search = $request->input('search');
+            $where[] = "(invoice_number LIKE '%{$search}%' OR first_name LIKE '%{$search}%' OR last_name LIKE '%{$search}%' OR email LIKE '%{$search}%')";
+        }
+
+        if (!empty($where)) {
+            $query .= " WHERE " . implode(" AND ", $where);
+        }
+
+        $query .= " ORDER BY tco.id DESC";
+        
+        $dataTrx = DB::select($query);
+
+        $result = [
+            'success' => true,
+            'data' => $dataTrx
+        ];
+
+        return view('transactions.all', ['response' => $result]);
     }
 
     public function addTransaction()

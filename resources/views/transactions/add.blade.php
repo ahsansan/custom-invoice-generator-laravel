@@ -1,7 +1,7 @@
 @extends('layouts/master')
 
 @section('konten')
-  <h4>Add Transactions</h4>
+    <h4 class="mt-4 mb-7 ml-2 text-xl font-extrabold uppercase text-[#735FF2]">Create Invoice</h4>
     <form action="{{ route('submit.transaction') }}" method="POST">
         @csrf
         <div class="form-group">

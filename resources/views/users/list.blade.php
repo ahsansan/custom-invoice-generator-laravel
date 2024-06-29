@@ -1,10 +1,10 @@
 @extends('layouts/master')
 
-@section('title', 'List Users')
+@section('title', 'User Lists')
 
 {{-- @dd($response) --}}
 @section('konten')
-    <h4 class="my-4 ml-2 text-xl font-extrabold uppercase text-[#735FF2]">List Akun</h4>
+    <h4 class="mt-4 mb-7 ml-2 text-xl font-extrabold uppercase text-[#735FF2]">Account Lists</h4>
     @php
         $headers = ['nomor', 'name', 'email', 'username', 'role', 'active'];
         $headerLabels = ['No', 'Name', 'Email', 'Username', 'Role', 'Status'];
