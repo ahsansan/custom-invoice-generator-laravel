@@ -23,6 +23,8 @@ Route::get('site-dashboard', [HomeController::class, 'home'])->name('home')->mid
 
 // USER
 Route::get('user/lists', [UserController::class, 'viewListUsers'])->name('userList')->middleware('auth');
+Route::get('user/add-user', [UserController::class, 'addUser'])->name('addUser')->middleware('auth');
+Route::post('user/register/action', [UserController::class, 'actionregister'])->name('actionregister')->middleware('auth');
 
 // TRANSACTION
 Route::get('transactions/lists', [TransactionController::class, 'allTransaction'])->name('transactions.all')->middleware('auth');
@@ -38,5 +40,5 @@ Route::post('actionlogin', [AuthController::class, 'actionlogin'])->name('action
 Route::get('actionlogout', [AuthController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
 
 // REGISTER
-Route::get('register', [AuthController::class, 'register'])->name('register');
-Route::post('register/action', [AuthController::class, 'actionregister'])->name('actionregister');
+// Route::get('register', [AuthController::class, 'register'])->name('register');
+// Route::post('register/action', [AuthController::class, 'actionregister'])->name('actionregister');

@@ -12,6 +12,12 @@
         $data = [];
     @endphp
 
+    @if(session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+    @endif
+
     @if($response['success'] == true)
         @foreach($response['data'] as $akun)
             @php
@@ -22,7 +28,9 @@
                     'email' => $akun->email,
                     'username' => $akun->username,
                     'role' => $akun->role_name,
-                    'active' => $akun->active == '1' ? 'Active' : 'Inactive'
+                    'active' => $akun->active == '1' ? 'Active' : 'Inactive',
+                    'viewlink' => "/user/$akun->username",
+                    'editlink' => "/user/$akun->username/edit"
                 ];
             @endphp
         @endforeach

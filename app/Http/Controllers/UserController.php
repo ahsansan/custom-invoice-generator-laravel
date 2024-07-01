@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -46,6 +48,25 @@ class UserController extends Controller
             
             return view('users.list', ['response' => $failed_role_message]);
         }
+    }
 
+    public function addUser()
+    {
+        return view('users.add');
+    }
+
+    public function actionregister(Request $request)
+    {
+        User::create([
+            'email' => $request->email,
+            'name' => $request->fullname,
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+            'role_id' => '2',
+            'active' => 1
+        ]);
+
+        Session::flash('message', 'User berhasil ditambahkan');
+        return redirect('users.list');
     }
 }

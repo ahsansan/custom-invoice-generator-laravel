@@ -40,7 +40,9 @@
                     'name' => $trans->first_name . ' ' . $trans->last_name,
                     'email' => $trans->email,
                     'phone' => $trans->phone,
-                    'tanggal' => \App\Helpers\TransactionHelper::getFullTime($trans->created_at)
+                    'tanggal' => \App\Helpers\TransactionHelper::getFullTime($trans->created_at),
+                    'viewlink' => "/invoice/$trans->invoice_number",
+                    'editlink' => "/transactions/$trans->id/edit"
                 ];
             @endphp
         @endforeach

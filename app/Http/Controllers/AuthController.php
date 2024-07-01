@@ -23,11 +23,6 @@ class AuthController extends Controller
         }
     }
 
-    public function register()
-    {
-        return view('register');
-    }
-
     public function actionLogin(Request $request)
     {
         $login = $request->input('login'); // bisa email atau username
@@ -62,20 +57,5 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/login');
-    }
-
-    public function actionregister(Request $request)
-    {
-        $user = User::create([
-            'email' => $request->email,
-            'name' => $request->fullname,
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'role_id' => '2',
-            'active' => 1
-        ]);
-
-        Session::flash('message', 'Register Berhasil. Akun Anda sudah Aktif silahkan Login menggunakan username dan password.');
-        return redirect('register');
     }
 }
