@@ -27,6 +27,8 @@ class UserController extends Controller
         // WHERE u.id = :id AND u.active = '1';";
         // $user_lists = DB::select($query, ['id' => $user->id]);
 
+        // MENAMBAHKAN WHERE BUAT PENCARIAN BY EMAIL, USERNAME, NAME
+
         if($role->role_code == 'SPA' or $role->role_code == 'ADM') {
 
             $query = "SELECT u.id, u.name, u.email, u.created_at, u.username, 
@@ -57,16 +59,28 @@ class UserController extends Controller
 
     public function actionregister(Request $request)
     {
+
+        // MENAMBAHKAN KONDISI BY ROLE
+
         User::create([
             'email' => $request->email,
             'name' => $request->fullname,
             'username' => $request->username,
             'password' => Hash::make($request->password),
-            'role_id' => '2',
+            'role_id' => $request->role,
             'active' => 1
         ]);
 
-        Session::flash('message', 'User berhasil ditambahkan');
-        return redirect('users.list');
+        // Session::flash('success', 'User berhasil ditambahkan');
+        // return redirect('/user/lists');
+        return redirect()->route('user.list')->with('success', 'User berhasil ditambahkan');
+    }
+
+    public function destroy($id)
+    {
+        $data = User::findOrFail($id);
+        $data->delete();
+
+        return redirect()->route('user.list')->with('success', 'Data berhasil dihapus.');
     }
 }

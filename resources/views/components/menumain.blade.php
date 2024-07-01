@@ -14,7 +14,7 @@
         </button>
         <div id="main-menu" class="px-4 py-2 bg-white {{ Request::is('site-*') ? '' : 'hidden' }}{{ Request::is('site-*') ? 'bg-gray-200 rounded-b' : '' }}">
             <ul>
-                <a href="/site-dashboard"><li class="py-1">Dashboard</li></a>
+                <a href="{{ route('home') }}"><li class="py-1">Dashboard</li></a>
                 <a href="/site-setting"><li class="py-1">Site Settings</li></a>
                 <a href="/site-integration"><li class="py-1">Midtrans Integration</li></a>
             </ul>
@@ -34,8 +34,8 @@
         </button>
         <div id="menu-transaction" class="px-4 py-2 bg-white {{ Request::is('transactions/*') ? '' : 'hidden' }}{{ Request::is('transactions/*') ? 'bg-gray-200 rounded-b' : '' }}">
             <ul>
-                <a href="/transactions/lists"><li class="py-1">All Transactions</li></a>
-                <a href="/transactions/add-invoice"><li class="py-1">Create Invoice</li></a>
+                <a href="{{ route('transactions.all') }}"><li class="py-1">All Transactions</li></a>
+                <a href="{{ route('transactions.add') }}"><li class="py-1">Create Invoice</li></a>
                 <a href="#"><li class="py-1">Invoice Setting</li></a>
             </ul>
         </div>
@@ -54,9 +54,9 @@
         </button>
         <div id="menu-user" class="px-4 py-2 bg-white {{ Request::is('user/*') ? '' : 'hidden' }}{{ Request::is('user/*') ? 'bg-gray-200 rounded-b' : '' }}">
             <ul>
-                <a href="/user/lists"><li class="py-1">All Users</li></a>
-                <a href="$"><li class="py-1">Add Users</li></a>
-                <a href="#"><li class="py-1">Your Profile</li></a>
+                <a href="{{ route('user.list') }}"><li class="py-1">All Users</li></a>
+                <a href="{{ route('user.add') }}"><li class="py-1">Add Users</li></a>
+                <a href="/user/{{ Auth::user()->username }}"><li class="py-1">Your Profile</li></a>
             </ul>
         </div>
     </div>
