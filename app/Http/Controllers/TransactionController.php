@@ -25,7 +25,7 @@ class TransactionController extends Controller
 
         if ($role->role_code == 'SPA') {
             // No additional where clause
-        } else if ($role->role_code == 'ADM') {
+        } else if ($role->role_code == 'ADM' or $role->role_code == 'STF') {
             $where[] = "created_by = {$user->id}";
         } else {
             return view('transactions.all', [

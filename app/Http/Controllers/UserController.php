@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Roles;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -11,11 +12,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function viewListUsers()
+    public function viewListUsers(Request $request)
     {
         $user = Auth::user();
 
-        $role = DB::table('mst_roles')->where('id', $user->role_id)->first();
+        $role = Roles::where('id', $user->role_id)->first();
 
         // CONTOH RAW
         // $results = DB::select('select * from users where id = :id', ['id' => 1]);
@@ -31,16 +32,36 @@ class UserController extends Controller
 
         if($role->role_code == 'SPA' or $role->role_code == 'ADM') {
 
+            $search = $request->input('search');
+
+            $conditions = [];
+            $bindings = [];
+
+            if ($search) {
+                $conditions[] = "(u.name LIKE ? OR u.email LIKE ? OR u.username LIKE ?)";
+                $bindings[] = '%' . $search . '%';
+                $bindings[] = '%' . $search . '%';
+                $bindings[] = '%' . $search . '%';
+            }
+
+            $whereClause = "";
+            if (count($conditions) > 0) {
+                $whereClause = "WHERE " . implode(" AND ", $conditions);
+            }
+
             $query = "SELECT u.id, u.name, u.email, u.created_at, u.username, 
-                    u.active, mr.role_code, mr.role_name, ROW_NUMBER() OVER (ORDER BY u.id desc) AS 'index'
-                    FROM users u
-                    INNER JOIN mst_roles mr ON mr.id = u.role_id;";
-            $user_lists = DB::select($query);
+                        u.active, mr.role_code, mr.role_name, ROW_NUMBER() OVER (ORDER BY u.id desc) AS 'index'
+                        FROM users u
+                        INNER JOIN mst_roles mr ON mr.id = u.role_id
+                        $whereClause;";
+            
+            $user_lists = DB::select($query, $bindings);
 
             $success_role_message = [
                 'success' => true,
                 'data' => $user_lists
             ];
+
             return view('users.list', ['response' => $success_role_message]);
         } else {
             $failed_role_message = [
@@ -71,8 +92,6 @@ class UserController extends Controller
             'active' => 1
         ]);
 
-        // Session::flash('success', 'User berhasil ditambahkan');
-        // return redirect('/user/lists');
         return redirect()->route('user.list')->with('success', 'User berhasil ditambahkan');
     }
 

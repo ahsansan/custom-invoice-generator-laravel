@@ -6,17 +6,17 @@
             </svg>
         </button>
         <div class="p-4 border-b">
-            <h5 class="text-lg font-semibold" id="confirmationModalLabel">Konfirmasi Hapus</h5>
+            <h5 class="text-lg font-semibold" id="confirmationModalLabel">{{ $message['header'] }}</h5>
         </div>
         <div class="p-4">
-            Apakah Anda yakin ingin menghapus data ini?
+            {{ $message['confirm'] }}
         </div>
         <div class="p-4 border-t flex justify-end space-x-4">
             <button type="button" class="btn btn-secondary bg-gray-300 px-4 py-2 rounded" onclick="closeModal()">Batal</button>
             <form id="deleteForm" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="btn btn-danger bg-red-500 text-white px-4 py-2 rounded">Hapus</button>
+                <button type="submit" class="btn btn-danger bg-red-500 text-white px-4 py-2 rounded">{{ $message['button'] }}</button>
             </form>
         </div>
     </div>
