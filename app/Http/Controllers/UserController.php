@@ -7,7 +7,6 @@ use App\Models\User;
 use App\Models\Roles;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -16,7 +15,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $role = Roles::where('id', $user->role_id)->first();
+        $role_code = $this->checkRoleCode($user->role_id);
 
         // CONTOH RAW
         // $results = DB::select('select * from users where id = :id', ['id' => 1]);
@@ -30,7 +29,7 @@ class UserController extends Controller
 
         // MENAMBAHKAN WHERE BUAT PENCARIAN BY EMAIL, USERNAME, NAME
 
-        if($role->role_code == 'SPA' or $role->role_code == 'ADM') {
+        if($role_code == 'SPA' or $role_code == 'ADM') {
 
             $search = $request->input('search');
 
@@ -101,5 +100,23 @@ class UserController extends Controller
         $data->delete();
 
         return redirect()->route('user.list')->with('success', 'Data berhasil dihapus.');
+    }
+
+    public function changeStatusUser($id)
+    {
+        $data = User::findOrFail($id);
+        $toUpdate = [
+            'active' => $data->active == '1' ? '0' : '1'
+        ];
+        $data->update($toUpdate);
+
+        return redirect()->route('user.list')->with('success', 'Data berhasil diupdate.');
+    }
+
+    public function checkRoleCode($id_role)
+    {
+        $role_code_check = Roles::where('id', $id_role)->first();
+        $role_code = $role_code_check->role_code;
+        return $role_code;
     }
 }

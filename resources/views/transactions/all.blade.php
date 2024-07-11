@@ -11,7 +11,7 @@
         $headerStyles = ['w-[50px]', 'w-[100px]', 'w-[150px]', 'w-[150px]', 'w-[100px]', 'w-[150px]'];
         $data = [];
         $isDelete = true;
-        $isInactive = true;
+        $isInactive = false;
     @endphp
 
     @if($response['success'] == true)

@@ -26,6 +26,7 @@ Route::get('user/lists', [UserController::class, 'viewListUsers'])->name('user.l
 Route::get('user/add-user', [UserController::class, 'addUser'])->name('user.add')->middleware('auth');
 Route::post('user/register/action', [UserController::class, 'actionregister'])->name('actionregister')->middleware('auth');
 Route::delete('user/delete/{id}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('auth');
+Route::patch('user/inactive/{id}', [UserController::class, 'changeStatusUser'])->name('user.inactive')->middleware('auth');
 
 // TRANSACTION
 Route::get('transactions/lists', [TransactionController::class, 'allTransaction'])->name('transactions.all')->middleware('auth');

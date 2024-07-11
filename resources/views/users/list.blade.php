@@ -12,11 +12,16 @@
         $headerStyles = ['w-[50px]', 'w-[150px]', 'w-[150px]', 'w-[150px]', 'w-[150px]', 'w-[100px]'];
         $data = [];
         $isDelete = true;
-        $isInactive = false;
-        $message = [
+        $isInactive = true;
+        $messageDelete = [
             'header' => 'Konfirmasi Hapus',
-            'confirm' => 'Apakah Anda yakin ingin menghapus data ini?',
+            'confirm' => 'Apakah Anda yakin ingin menghapus user ini?',
             'button' => 'Hapus'
+        ];
+        $messageInactive = [
+            'header' => 'Konfirmasi Update',
+            'confirm' => 'Apakah Anda yakin ingin update user ini?',
+            'button' => 'Update'
         ];
     @endphp
 
@@ -68,7 +73,8 @@
             @endphp
         @endforeach
         @include('components.tablegeneral', compact('headers', 'data', 'headerLabels', 'headerStyles', 'isInactive', 'isDelete'))
-        @include('components.modals.modaldelete', compact('message'))
+        @include('components.modals.modaldelete', compact('messageDelete'))
+        @include('components.modals.modalinactive', compact('messageInactive'))
     @else
         <p>{{ $response['message'] }}</p>
     @endif
@@ -77,21 +83,27 @@
 @section('scripts')
 <script>
     function confirmDelete(id) {
-        var form = document.getElementById('deleteForm');
-        form.action = '/user/delete/' + id;
+        var formDelete = document.getElementById('deleteForm');
+        formDelete.action = '/user/delete/' + id;
 
-        $('#confirmationModal').hide().removeClass('hidden').fadeIn(150);
+        $('#deleteConfirmationModal').hide().removeClass('hidden').fadeIn(150);
+    }
+
+    function closeModalDelete() {
+        $('#deleteConfirmationModal').fadeOut(150, function() {
+            $(this).addClass('hidden');
+        });
     }
 
     function confirmInactive(id) {
-        var form = document.getElementById('confirmForm');
-        form.action = '/user/inactive/' + id;
+        var formInactive = document.getElementById('inactiveForm');
+        formInactive.action = '/user/inactive/' + id;
 
-        $('#confirmationModal').hide().removeClass('hidden').fadeIn(150);
+        $('#inactiveConfirmationModal').hide().removeClass('hidden').fadeIn(150);
     }
 
-    function closeModal() {
-        $('#confirmationModal').fadeOut(150, function() {
+    function closeModalInactive() {
+        $('#inactiveConfirmationModal').fadeOut(150, function() {
             $(this).addClass('hidden');
         });
     }
