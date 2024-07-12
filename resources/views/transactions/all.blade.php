@@ -10,8 +10,12 @@
         $headerLabels = ['No', 'Nomor Invoice', 'Nama', 'Email', 'Nomor Hp', 'Tanggal Transaksi'];
         $headerStyles = ['w-[50px]', 'w-[100px]', 'w-[150px]', 'w-[150px]', 'w-[100px]', 'w-[150px]'];
         $data = [];
-        $isDelete = true;
-        $isInactive = false;
+        $visibility = [
+            'isDelete' => true,
+            'isInactive' => false,
+            'isView' => true,
+            'isEdit' => true,
+        ];
     @endphp
 
     @if($response['success'] == true)
@@ -48,7 +52,7 @@
               ];
           @endphp
       @endforeach
-      @include('components.tablegeneral', compact('headers', 'data', 'headerLabels', 'headerStyles', 'isInactive', 'isDelete'))
+      @include('components.tablegeneral', compact('headers', 'data', 'headerLabels', 'headerStyles', 'visibility'))
     @else
         <p>{{ $response['message'] }}</p>
     @endif

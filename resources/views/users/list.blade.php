@@ -11,8 +11,12 @@
         $headerLabels = ['No', 'Name', 'Email', 'Username', 'Role', 'Status'];
         $headerStyles = ['w-[50px]', 'w-[150px]', 'w-[150px]', 'w-[150px]', 'w-[150px]', 'w-[100px]'];
         $data = [];
-        $isDelete = true;
-        $isInactive = true;
+        $visibility = [
+            'isDelete' => true,
+            'isInactive' => true,
+            'isView' => false,
+            'isEdit' => true,
+        ];
         $messageDelete = [
             'header' => 'Konfirmasi Hapus',
             'confirm' => 'Apakah Anda yakin ingin menghapus user ini?',
@@ -23,6 +27,9 @@
             'confirm' => 'Apakah Anda yakin ingin update user ini?',
             'button' => 'Update'
         ];
+        $currentPage = $response['pagination']['currentPage'];
+        $totalPages = $response['pagination']['totalPages'];
+        $limit = 1;
     @endphp
 
     @if(session('success'))
@@ -72,7 +79,8 @@
                 ];
             @endphp
         @endforeach
-        @include('components.tablegeneral', compact('headers', 'data', 'headerLabels', 'headerStyles', 'isInactive', 'isDelete'))
+        @include('components.tablegeneral', compact('headers', 'data', 'headerLabels', 'headerStyles', 'visibility'))
+        @include('components.pagination', compact('currentPage', 'totalPages'))
         @include('components.modals.modaldelete', compact('messageDelete'))
         @include('components.modals.modalinactive', compact('messageInactive'))
     @else
@@ -106,6 +114,20 @@
         $('#inactiveConfirmationModal').fadeOut(150, function() {
             $(this).addClass('hidden');
         });
+    }
+
+    function handlePagination(currentUrl, nextPage, limit, search) {
+        let urlPage = new URL(currentUrl);
+        urlPage.searchParams.set('page', nextPage);
+        urlPage.searchParams.set('limit', limit);
+
+        if (search) {
+            urlPage.searchParams.set('search', search);
+        } else {
+            urlPage.searchParams.delete('search');
+        }
+
+        window.location.href = urlPage.toString();
     }
 </script>
 @endsection

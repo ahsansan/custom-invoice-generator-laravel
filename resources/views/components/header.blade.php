@@ -19,7 +19,7 @@
                 </div>
                 <ul class="py-2 text-sm text-black">
                 <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-300">Edit Profile</a>
+                    <a href="/user/{{Auth::user()->username}}/edit" class="block px-4 py-2 hover:bg-gray-300">Edit Profile</a>
                 </li>
                 <li>
                     <a href="{{route('actionlogout')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300"><i class="fa fa-power-off text-red-600"></i><span class="text-red-600"> Sign out</span></a>

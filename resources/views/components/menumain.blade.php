@@ -56,7 +56,7 @@
             <ul>
                 <a href="{{ route('user.list') }}"><li class="py-1">All Users</li></a>
                 <a href="{{ route('user.add') }}"><li class="py-1">Add Users</li></a>
-                <a href="/user/{{ Auth::user()->username }}"><li class="py-1">Your Profile</li></a>
+                <a href="/user/{{ Auth::user()->username }}/edit"><li class="py-1">Your Profile</li></a>
             </ul>
         </div>
     </div>

@@ -1,5 +1,7 @@
 @extends('layouts/master')
 
+@section('title', 'Add User')
+
 @section('konten')
 <div class="col-md-6 col-md-offset-3">
     <h4 class="mt-4 mb-7 ml-2 text-xl font-extrabold uppercase text-[#735FF2]">Add Account</h4>
